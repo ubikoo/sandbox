@@ -37,7 +37,7 @@ static const double pair_r_cut = 2.0;           /* cutoff radius */
 static const double pair_r_skin = 1.0;          /* skin radius */
 static const double pair_r_hard = 0.01;         /* hard sphere radius */
 static const double thermostat_mass = 10.0;     /* thermostat inertial mass */
-} /* Params */
+}
 
 /**
  * @brief Fluid atoms.

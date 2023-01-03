@@ -9,103 +9,104 @@
  * See accompanying LICENSE.md or https://opensource.org/licenses/MIT.
  */
 
+#include <vector>
+#include "ito/opengl.hpp"
+#include "ito/opencl.hpp"
+using namespace ito;
 #include "model.hpp"
-using namespace atto;
+#include "params.hpp"
 
-/** ---------------------------------------------------------------------------
- * Model::Model
- * @brief Create OpenCL context and associated objects.
+/**
+ * @brief Create a new model and associated OpenCL/OpenGL objects.
  */
-Model::Model(void)
+Model Model::Create()
 {
-    /*
-     * Setup Model data.
-     */
+    Model model;
+
+    /* Setup Model. */
     { /* Empty */ }
 
-    /*
-     * Setup OpenGL data.
-     */
+    /* OpenGL objects. */
     { /* Empty */ }
 
-    /*
-     * Setup OpenCL data.
-     */
+    /* OpenCL objects. */
     {
-#if 0
-        // /* Setup OpenCL context with a command queue on the specified device. */
-        // m_context = cl::Context::create(CL_DEVICE_TYPE_GPU);
-        // m_device = cl::Context::get_device(m_context, Params::device_index);
-        // m_queue = cl::Queue::create(m_context, m_device);
+#if 1
+        /* Setup OpenCL context with a command queue on the specified device. */
+        // m_cl.context = cl::CreateContext(CL_DEVICE_TYPE_GPU);
+        // m_cl.device = cl::GetContextDevice(m_cl.context, Params::kDeviceIndex);
+        // m_cl.queue = cl::CreateCommandQueue(m_cl.context, m_cl.device);
+        // std::cout << cl::GetDeviceInfoStr(device) << "\n";
 #else
-        // /* Setup OpenCL context based on the OpenGL context in the device. */
-        // m_device = cl::Context::get_device(m_context, Params::device_index);
-        // m_context = cl::Context::create_cl_gl_shared(m_device);
-        // m_queue = cl::Queue::create(m_context, m_device);
+        /* Setup OpenCL context based on the OpenGL context in the device. */
+        // m_cl.device = cl::Context::get_device(m_cl.context, Params::kDeviceIndex);
+        // m_cl.context = cl::Context::create_cl_gl_shared(m_cl.device);
+        // m_cl.queue = cl::Queue::create(m_cl.context, m_cl.device);
+        // std::cout << cl::GetDeviceInfoStr(device) << "\n";
 #endif
 
-        /* Create OpenCL program. */
+#if 1
+        /* Create OpenCL program from source. */
         // std::string source;
-        // source.append(cl::Program::load_source_from_file("data/empty.cl"));
-        // m_program = cl::Program::create_from_source(m_context, source);
-        // cl::Program::build(m_program, m_device, "");
-
-        // m_program = cl::Program::create_from_file(m_context, "data/empty.cl");
-        // cl::Program::build(m_program, m_device, "");
+        // source.append(cl::LoadProgramSource("data/empty.cl"));
+        // m_cl.program = cl::CreateProgramWithSource(m_cl.context, source);
+        // cl::BuildProgram(m_cl.program, m_cl.device, "");
+#else
+        /* Create OpenCL program from file. */
+        // m_cl.program = cl::CreateProgramFromFile(m_cl.context, "data/empty.cl");
+        // cl::BuildProgram(m_cl.program, m_cl.device, "");
+#endif
 
         /* Create OpenCL kernel. */
-        // m_kernels.resize(NumKernels, NULL);
-        // m_kernels[KernelEmpty] = cl::Kernel::create(m_program, "empty");
+        // m_cl.kernels.resize(NumKernels, NULL);
+        // m_cl.kernels[KernelEmpty] = cl::Kernel::create(m_cl.program, "empty");
+    }
+
+    return model;
+}
+
+/**
+ * @brief Destroy a model and associated OpenCL/OpenGL objects.
+ */
+void Model::Destroy(Model &model)
+{
+    /* OpenGL objects. */
+    {}
+
+    /* OpenCL objects. */
+    {
+    //     for (auto &it : m_cl.images) {
+    //         cl::Memory::release(it);
+    //     }
+    //     for (auto &it : m_cl.buffers) {
+    //         cl::Memory::release(it);
+    //     }
+    //     for (auto &it : m_cl.kernels) {
+    //         cl::Kernel::release(it);
+    //     }
+    //     cl::Program::release(m_cl.program);
     }
 }
 
 /**
- * Model::~Model
- * @brief Destroy the OpenCL context and associated objects.
+ * @brief Handle the event in the model.
  */
-Model::~Model()
-{
-    /* Teardown model data. */
-    {
-    }
-
-    /* Teardown OpenCL data. */
-    {
-    //     for (auto &it : m_images) {
-    //         cl::Memory::release(it);
-    //     }
-    //     for (auto &it : m_buffers) {
-    //         cl::Memory::release(it);
-    //     }
-    //     for (auto &it : m_kernels) {
-    //         cl::Kernel::release(it);
-    //     }
-    //     cl::Program::release(m_program);
-    }
-}
-
-/** ---------------------------------------------------------------------------
- * Model::handle
- * @brief Handle the event.
- */
-void Model::handle(const gl::Event &event)
+void Model::Handle(gl::Renderer::Event &event)
 {}
 
-/** ---------------------------------------------------------------------------
- * Model::draw
- * @brief Render the drawable.
+/**
+ * @brief Update the model.
  */
-void Model::draw(void *data)
+void Model::Update()
+{}
+
+/**
+ * @brief Render the model.
+ */
+void Model::Render(void)
 {
-    GLFWwindow *window = gl::Renderer::window();
+    GLFWwindow *window = gl::Renderer::Window();
     if (window == nullptr) {
         return;
     }
 }
-
-/** ---------------------------------------------------------------------------
- * Model::execute
- * @brief Execute the model.
- */
-void Model::execute(void)
-{}

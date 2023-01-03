@@ -1,15 +1,15 @@
 # -----------------------------------------------------------------------------
 # Target and project macros
 TARGET 	 := empty
-BINARY 	 := $(join $(TARGET),.out)
+BINARY   := $(join $(TARGET),.out)
 
 # Source files, include files and search paths
 SOURCES  := $(filter-out $(wildcard _*.cpp), $(wildcard *.cpp)) \
 			$(filter-out $(wildcard _*.c), $(wildcard *.c))
-INCLUDES := $(wildcard *.hpp)
+INCLUDES := $(wildcard *.hpp) $(wildcard *.h)
 CFLAGS   := -I.
 
-# Template module file makefile.mk
+# Template makefile.mk
 # 	SOURCES  += $(filter-out $(wildcard $(ROOTDIR)/source/_*.c), \
 #   	                     $(wildcard $(ROOTDIR)/source/*.c))
 # 	INCLUDES += $(wildcard $(ROOTDIR)/source/*.h)
@@ -22,17 +22,15 @@ CFLAGS   := -I.
 #	INCLUDES += $(wildcard $(ROOTDIR)/include/*.hpp) \
 #               $(wildcard $(ROOTDIR)/include/*.h)
 #	CFLAGS   += -I$(ROOTDIR)/include
-ROOTDIR	 := ../../atto
-include $(ROOTDIR)/atto/core.mk
-include $(ROOTDIR)/atto/math.mk
-include $(ROOTDIR)/atto/opengl.mk
-include $(ROOTDIR)/atto/opencl.mk
+# 3rdparty modules
+ROOTDIR	 := ../3rdparty
+CFLAGS   += -I$(ROOTDIR)
 
-ROOTDIR	 := ../../atto/3rdparty
-CFLAGS += -I$(ROOTDIR)
+ROOTDIR	 := ../3rdparty/glad
+include $(ROOTDIR)/config.mk
 
-ROOTDIR	 := ../../atto/3rdparty/gladload
-include $(ROOTDIR)/makefile.mk
+ROOTDIR	 := ../3rdparty/ito
+include $(ROOTDIR)/config.mk
 
 # Objects and dependencies
 CXX_SOURCES := $(filter %.cpp,$(SOURCES))
@@ -63,8 +61,8 @@ UNAME   := $(shell uname -s)
 ifeq ($(UNAME), Darwin)
 CC      := g++-mp-9
 
-CFLAGS  += -march=native -Wa,-q
-CFLAGS  += -I/opt/local/include -I/usr/local/include -Wall -std=c++14
+CFLAGS  += -march=native -mavx -Wa,-q
+CFLAGS  += -I/opt/local/include -Wall -std=c++14
 CFLAGS  += -fPIC -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64
 CFLAGS  += $(shell pkg-config --cflags glfw3)
 CFLAGS  += $(shell pkg-config --cflags assimp)

@@ -47,7 +47,7 @@ ask() {
 execute() {
     pushd "${1}"
     run make -f ../Makefile clean
-    run make -f ../Makefile -j48 all
+    run make -f ../Makefile -j32 all
     run ./ising.out
     run make -f ../Makefile clean
     popd

@@ -50,7 +50,7 @@ static const cl_ulong num_work_items =
 static const cl_ulong num_work_groups = num_work_items / work_group_size;
 // static const cl_ulong2 num_work_items;       /* global workgroup size */
 // static const cl_ulong2 num_work_groups;      /* number of worgroups */
-} /* Params */
+}
 
 /**
  * @brief Plane boundary.

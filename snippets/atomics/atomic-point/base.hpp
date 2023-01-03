@@ -34,6 +34,6 @@ static const uint32_t n_cells = 5;
 
 static const cl_float3 domain_lo = {-1.0f, -1.0f, -1.0f};
 static const cl_float3 domain_hi = { 1.0f,  1.0f,  1.0f};
-} /* Params */
+}
 
 #endif /* BASE_H_ */

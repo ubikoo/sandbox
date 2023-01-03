@@ -52,6 +52,6 @@ static const double poll_timeout = 0.01;
 //static const cl_ulong num_work_items = atto::cl::NDRange::Roundup(n_thermostats, work_group_size);
 //static const cl_ulong num_work_groups = num_work_items / work_group_size;
 
-} /* Params */
+}
 
 #endif /* BASE_H_ */

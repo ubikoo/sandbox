@@ -9,68 +9,91 @@
  * See accompanying LICENSE.md or https://opensource.org/licenses/MIT.
  */
 
-#include <memory>
-#include <chrono>
-#include <numeric>
-#include <vector>
-
-#include "atto/opencl/opencl.hpp"
+#include "ito/opengl.hpp"
+#include "ito/opencl.hpp"
+using namespace ito;
 #include "model.hpp"
-using namespace atto;
+#include "params.hpp"
 
-/**
+
+/** ---------------------------------------------------------------------------
+ * @brief Constants and globals.
+ */
+Model gModel;
+
+/** ---------------------------------------------------------------------------
+ * @brief Handle events.
+ */
+static void Handle(void)
+{
+    /* Poll events and handle. */
+    gl::Renderer::PollEvent(Params::kTimeout);
+    while (gl::Renderer::HasEvent()) {
+        gl::Renderer::Event event = gl::Renderer::PopEvent();
+
+        if (event.type == gl::Renderer::Event::FramebufferSize) {
+            int w = event.framebuffersize.width;
+            int h = event.framebuffersize.height;
+            gl::Renderer::Viewport({0, 0, w, h});
+        }
+
+        if ((event.type == gl::Renderer::Event::WindowClose) ||
+            (event.type == gl::Renderer::Event::Key &&
+             event.key.code == GLFW_KEY_ESCAPE)) {
+            gl::Renderer::Close();
+        }
+
+        gModel.Handle(event);
+    }
+}
+
+/** ---------------------------------------------------------------------------
+ * @brief Update state.
+ */
+static void Update(void)
+{
+    gModel.Update();
+}
+
+/** ---------------------------------------------------------------------------
+ * @brief Draw and swap buffers.
+ */
+static void Render(void)
+{
+    gl::Renderer::ClearBuffers(0.5f, 0.5f, 0.5f, 1.0f, 1.0f);
+    gModel.Render();
+    gl::Renderer::SwapBuffers();
+}
+
+/** ---------------------------------------------------------------------------
  * main test client
  */
 int main(int argc, char const *argv[])
 {
-    /* Setup renderer OpenGL context and initialize the GLFW library. */
-    gl::Renderer::init(
-        Params::window_width,
-        Params::window_height,
-        Params::window_title);
-    gl::Renderer::enable_event(
-        gl::Event::FramebufferSize |
-        gl::Event::WindowClose     |
-        gl::Event::Key);
+    /* Setup OpenGL context and initialize the GLFW library. */
+    gl::Renderer::Init(Params::kWidth, Params::kHeight, Params::kTitle);
+    gl::Renderer::EnableEvent(
+        gl::Renderer::Event::FramebufferSize |
+        gl::Renderer::Event::WindowClose     |
+        gl::Renderer::Event::Key);
+
+    /* Create the model object. */
+    gModel = Model::Create();
 
     /*
      * Render loop:
-     *  poll and handle events
-     *  update, draw and swap buffers
+     *  handle events
+     *  update the state
+     *  draw and swap buffers
      */
-    Model model;
-    while (gl::Renderer::is_open()) {
-        /* Poll events and handle. */
-        gl::Renderer::poll_event(Params::poll_timeout);
-        while (gl::Renderer::has_event()) {
-            gl::Event event = gl::Renderer::pop_event();
-
-            if (event.type == gl::Event::FramebufferSize) {
-                int w = event.framebuffersize.width;
-                int h = event.framebuffersize.height;
-                gl::Renderer::viewport({0, 0, w, h});
-            }
-
-            if ((event.type == gl::Event::WindowClose) ||
-                (event.type == gl::Event::Key &&
-                 event.key.code == GLFW_KEY_ESCAPE)) {
-                gl::Renderer::close();
-            }
-
-            /* Handle the event. */
-            model.handle(event);
-        }
-
-        {
-            /* Update the model state. */
-            model.execute();
-
-            /* Draw and swap buffers. */
-            gl::Renderer::clear(0.2, 0.4, 0.6, 1.0, 1.0);
-            model.draw();
-            gl::Renderer::display();
-        }
+    while (gl::Renderer::IsOpen()) {
+        Handle();
+        Update();
+        Render();
     }
+
+    /* Destroy the model object. */
+    Model::Destroy(gModel);
 
     exit(EXIT_SUCCESS);
 }

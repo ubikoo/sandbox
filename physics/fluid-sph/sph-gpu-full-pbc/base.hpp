@@ -48,7 +48,7 @@ static const cl_ulong work_group_size = 256;    /* local workgroup size */
 static const cl_ulong num_work_items = atto::cl::NDRange::Roundup(
     n_particles, work_group_size);
 static const cl_ulong num_work_groups = num_work_items / work_group_size;
-} /* Params */
+}
 
 /**
  * @brief Plane boundary.

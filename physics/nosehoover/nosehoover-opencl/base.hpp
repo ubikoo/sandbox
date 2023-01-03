@@ -53,7 +53,7 @@ static const cl_ulong device_index = 2;
 static const cl_ulong work_group_size_1d = 256;
 static const cl_ulong work_group_size_2d = 16;
 
-} /* Params */
+}
 
 /** ---------------------------------------------------------------------------
  * @brief NoseHoover spring-thermostat parameters.

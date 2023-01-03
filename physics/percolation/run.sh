@@ -49,7 +49,7 @@ execute() {
 }
 
 run make -f Makefile clean
-run make -f Makefile -j48 all
+run make -f Makefile -j32 all
 
 plo=0.55;
 phi=0.65;

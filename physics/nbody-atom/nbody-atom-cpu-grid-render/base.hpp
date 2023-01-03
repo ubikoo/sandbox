@@ -43,7 +43,7 @@ static const int window_width = 1024;
 static const int window_height = 1024;
 static const char window_title[] = "md-cpu-grid-render";
 static const double poll_timeout = 0.01;
-} /* Params */
+}
 
 /**
  * @brief Fluid atoms.

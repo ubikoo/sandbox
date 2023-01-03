@@ -3,13 +3,14 @@
 Graphics and physics research projects:
 
 **empty**
- - Empty template project.
+ - template project.
 
 **graphics**
  - raymarch
  - raytrace
 
 **physics**
+ - chaos
  - fluid-pic
  - fluid-sph
  - ising
@@ -20,6 +21,7 @@ Graphics and physics research projects:
  - percolation
 
 **snippets**
+ - atomics
  - clinfo
  - convolution
  - hashmap

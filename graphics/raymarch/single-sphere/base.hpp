@@ -39,7 +39,7 @@ static const double poll_timeout = 0.01;
 /* OpenCL parameters */
 static const cl_ulong device_index = 2;         /* gpu device index. */
 static const cl_ulong work_group_size = 16;     /* local workgroup size */
-} /* Params */
+}
 
 /** ---------------------------------------------------------------------------
  * @brief Sphere data type.

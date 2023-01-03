@@ -26,6 +26,6 @@ static const uint32_t n_cells = (1 << 4);
 static const uint32_t n_points = (1 << 8);
 static const atto::math::vec3f domain_lo{-1.0f, -1.0f, -1.0f};
 static const atto::math::vec3f domain_hi{1.0f,  1.0f,  1.0f};
-} /* Params */
+}
 
 #endif /* BASE_H_ */

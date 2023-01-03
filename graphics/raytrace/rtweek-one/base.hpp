@@ -38,6 +38,6 @@ static const double poll_timeout = 0.01;
 // static const cl_ulong num_work_items = atto::cl::NDRange::Roundup(
 //     n_items, work_group_size);
 // static const cl_ulong num_work_groups = num_work_items / work_group_size;
-} /* Params */
+}
 
 #endif /* RAYTRACE_CPU_WEEK_1_BASE_H_ */

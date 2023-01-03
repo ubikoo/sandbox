@@ -35,6 +35,6 @@ static const cl_ulong num_work_groups = num_work_items / work_group_size;
 
 /* OpenMPI parameters */
 static const int master_id = 0;
-} /* Params */
+}
 
 #endif /* BASE_H_ */

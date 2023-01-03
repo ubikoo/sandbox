@@ -1,16 +1,18 @@
 # TODO
 
+**graphics/raymarch/simple-multiple-spheres**
+- Implement raymarching of multiple spheres
+
+**graphics/raytrace/rtweek-two**
+- Implement raytrace in one weekend, the next week
+
+---
+
 **physics/fluid-pic/flow2d**
 - Implement a minimal fluid solver in 2d
 
 **physics/fluid-sph/sph-gpu-grid-surface-raymarch**
 - Render the fluid surface using a sphere tracing algorithm to compute an isosurface with a specified density
-
-**physics/raymarch/simple-multiple-spheres**
-- Implement raymarching of multiple spheres
-
-**physics/raytrace/rtweek-two**
-- Implement raytrace in one weekend, the next week
 
 **physics/mandelbrot/julia-set**
 - Implement a Julia set generator based on the position in the Mandelbrot set

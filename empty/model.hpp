@@ -13,42 +13,38 @@
 #define MODEL_H_
 
 #include <vector>
-#include "base.hpp"
+#include "ito/opengl.hpp"
+#include "ito/opencl.hpp"
 
-struct Model : atto::gl::Drawable {
-    /* ---- Model data ---------------------------------------------- */
-    struct Data {} m_data;
+struct Model {
+    struct {} m_gl;
 
-    /* ---- Model OpenCL data ---------------------------------------------- */
-    cl_context m_context = NULL;
-    cl_device_id m_device = NULL;
-    cl_command_queue m_queue = NULL;
-    cl_program m_program = NULL;
-    enum {
-        NumKernels = 0,
-    };
-    std::vector<cl_kernel> m_kernels;
-    enum {
-        NumBuffers = 0,
-    };
-    std::vector<cl_mem> m_buffers;
-    enum {
-        NumImages = 0
-    };
-    std::vector<cl_mem> m_images;
+    struct {
+        // cl_context context = NULL;
+        // cl_device_id device = NULL;
+        // cl_command_queue queue = NULL;
+        // cl_program program = NULL;
+        // enum {
+        //     KernelEmpty = 0
+        //     NumKernels,
+        // };
+        // std::vector<cl_kernel> kernels;
+        // enum {
+        //     NumBuffers = 0,
+        // };
+        // std::vector<cl_mem> buffers;
+        // enum {
+        //     NumImages = 0
+        // };
+        // std::vector<cl_mem> images;
+    } m_cl;
 
-    /* ---- Model OpenGL data ---------------------------------------------- */
-    struct GLData {} m_gl;
+    static void Handle(ito::gl::Renderer::Event &event);
+    static void Update(void);
+    static void Render(void);
 
-    /* ---- Model member functions ----------------------------------------- */
-    void handle(const atto::gl::Event &event) override;
-    void draw(void *data = nullptr) override;
-    void execute(void);
-
-    Model();
-    ~Model();
-    Model(const Model &) = delete;
-    Model &operator=(const Model &) = delete;
+    static Model Create(void);
+    static void Destroy(Model &model);
 };
 
 #endif /* MODEL_H_ */
