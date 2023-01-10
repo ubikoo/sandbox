@@ -13,7 +13,6 @@
 using namespace atto;
 
 /** ---------------------------------------------------------------------------
- * Model::Model
  * @brief Create OpenCL context and associated objects.
  */
 Model::Model(void)
@@ -104,7 +103,6 @@ Model::Model(void)
 }
 
 /**
- * Model::~Model
  * @brief Destroy the OpenCL context and associated objects.
  */
 Model::~Model()
@@ -128,14 +126,12 @@ Model::~Model()
 }
 
 /** ---------------------------------------------------------------------------
- * Model::handle
  * @brief Handle the event.
  */
 void Model::handle(const gl::Event &event)
 {}
 
 /** ---------------------------------------------------------------------------
- * Model::draw
  * @brief Render the drawable.
  */
 void Model::draw(void *data)
@@ -219,7 +215,6 @@ void Model::draw(void *data)
 }
 
 /** ---------------------------------------------------------------------------
- * Model::execute
  * @brief Execute the model.
  */
 void Model::execute(void)
@@ -232,7 +227,6 @@ void Model::execute(void)
 }
 
 /**
- * Model::integrate
  * @brief Integrate a single thermostat
  */
 void Model::integrate(size_t therm_ix)

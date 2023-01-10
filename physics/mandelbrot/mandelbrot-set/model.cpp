@@ -13,7 +13,6 @@
 using namespace atto;
 
 /** ---------------------------------------------------------------------------
- * Model::Model
  * @brief Create OpenCL context and associated objects.
  */
 Model::Model()
@@ -121,7 +120,6 @@ Model::Model()
 }
 
 /**
- * Model::~Model
  * @brief Destroy the OpenCL context and associated objects.
  */
 Model::~Model()
@@ -150,7 +148,6 @@ Model::~Model()
 }
 
 /** ---------------------------------------------------------------------------
- * Model::handle
  * Handle an event.
  */
 void Model::handle(const gl::Event &event)
@@ -201,7 +198,6 @@ void Model::handle(const gl::Event &event)
 }
 
 /** ---------------------------------------------------------------------------
- * Model::draw
  * @brief Render the drawable.
  */
 void Model::draw(void *data)
@@ -237,7 +233,6 @@ void Model::draw(void *data)
 }
 
 /** ---------------------------------------------------------------------------
- * Model::execute
  * @brief Execute the model.
  */
 void Model::execute(void)

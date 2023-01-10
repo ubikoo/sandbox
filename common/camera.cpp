@@ -13,10 +13,12 @@
 using namespace ito;
 #include "camera.hpp"
 
+namespace common {
+
 /**
  * @brief Move the camera forward and backward along its look vector.
  */
-void Camera::Move(float step)
+void Camera::move(float step)
 {
     eye += look * step;
 }
@@ -24,7 +26,7 @@ void Camera::Move(float step)
 /**
  * @brief Strafe the camera right and left along its right vector.
  */
-void Camera::Strafe(float step)
+void Camera::strafe(float step)
 {
     math::vec3f right = math::normalize(math::cross(look, up));
     eye += right * step;
@@ -33,26 +35,26 @@ void Camera::Strafe(float step)
 /**
  * @brief Rotate camera up and down around its right vector.
  */
-void Camera::Pitch(float angle)
+void Camera::pitch(float angle)
 {
     math::vec3f right = math::normalize(math::cross(look, up));
-    Rotate(math::rotate(right, angle));
+    update(math::rotate(right, angle));
 }
 
 /**
  * @brief Rotate camera left and right around its up vector.
  */
-void Camera::Yaw(float angle)
+void Camera::yaw(float angle)
 {
     math::vec3f right = math::normalize(math::cross(look, up));
-    math::vec3f updir = math::normalize(math::cross(right, look));
-    Rotate(math::rotate(updir, angle));
+    math::vec3f upward = math::normalize(math::cross(right, look));
+    update(math::rotate(upward, angle));
 }
 
 /**
- * @brief Rotate the camera look direction.
+ * @brief Update the camera look direction.
  */
-void Camera::Rotate(const math::mat4f &rot)
+void Camera::update(const math::mat4f &rot)
 {
     math::vec4f d = {look.x, look.y, look.z, 0.0f};
     d = math::dot(rot, d);
@@ -62,7 +64,7 @@ void Camera::Rotate(const math::mat4f &rot)
 /**
  * @brief Return the camera view transform.
  */
-math::mat4f Camera::View(void)
+math::mat4f Camera::view(void)
 {
     return math::lookat(eye, eye + look, up);
 }
@@ -81,3 +83,5 @@ Camera Camera::Create(
     camera.up = up;
     return camera;
 }
+
+} /* common */

@@ -11,17 +11,13 @@
 # See accompanying LICENSE.md or https://opensource.org/licenses/MIT.
 #
 
-# -----------------------------------------------------------------------------
-# die with message
-#
+# Die with message
 die() {
     echo >&2 "$@"
     exit 1
 }
 
-#
-# run command and check exit code
-#
+# Run command and check exit code
 run() {
     echo "$@" && "$@"
     code=$?
@@ -29,9 +25,7 @@ run() {
     return 0
 }
 
-#
-# ask for input query
-#
+# Ask for input query
 ask() {
     echo -n "$@ (y/n [n]): "
     local ans
@@ -40,15 +34,13 @@ ask() {
     return 0
 }
 
-# -----------------------------------------------------------------------------
-# Execute
-#
+# Execute command
 execute() {
     pushd "${1}"
+    run make clean > /dev/null
+    run make -j32 all > /dev/null
+    run ./empty.out
+    run make clean > /dev/null
     popd
 }
-
-run make -f Makefile clean
-run make -f Makefile -j32 all
-run ./empty.out
-run make -f Makefile clean
+execute .

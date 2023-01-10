@@ -12,31 +12,18 @@
 #ifndef MODEL_H_
 #define MODEL_H_
 
-#include <vector>
 #include "ito/opengl.hpp"
 #include "ito/opencl.hpp"
+#include "model-cpu.hpp"
+#include "model-gpu.hpp"
 
 struct Model {
-    struct {} m_gl;
+    std::vector<Point> m_points;
+    ModelCPU m_cpu;
+    ModelGPU m_gpu;
 
-    struct {
-        cl_context context = NULL;
-        cl_device_id device = NULL;
-        cl_command_queue queue = NULL;
-        cl_program program = NULL;
-        enum {
-            NumKernels = 0,
-        };
-        std::vector<cl_kernel> kernels;
-        enum {
-            NumBuffers = 0,
-        };
-        std::vector<cl_mem> buffers;
-        enum {
-            NumImages = 0
-        };
-        std::vector<cl_mem> images;
-    } m_cl;
+    struct {} m_gl;
+    struct {} m_cl;
 
     void Handle(ito::glfw::Event &event);
     void Update(void);

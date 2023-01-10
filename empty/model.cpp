@@ -17,7 +17,7 @@ using namespace ito;
 #include "params.hpp"
 
 /**
- * @brief Create a new model and associated OpenCL/OpenGL objects.
+ * @brief Create a new model and associated objects.
  */
 Model Model::Create()
 {
@@ -26,72 +26,61 @@ Model Model::Create()
     /* Setup Model. */
     { /* Empty */ }
 
-    /* OpenGL objects. */
+    /* OpenGL data. */
     { /* Empty */ }
 
-    /* OpenCL objects. */
+    /* OpenCL data. */
     {
-#if 1
-        /* Setup OpenCL context with a command queue on the specified device. */
-        // m_cl.context = cl::CreateContext(CL_DEVICE_TYPE_GPU);
-        // m_cl.device = cl::GetContextDevice(m_cl.context, Params::kDeviceIndex);
-        // m_cl.queue = cl::CreateCommandQueue(m_cl.context, m_cl.device);
-        // std::cout << cl::GetDeviceInfoStr(device) << "\n";
-#else
-        /* Setup OpenCL context based on the OpenGL context in the device. */
-        // m_cl.device = cl::Context::get_device(m_cl.context, Params::kDeviceIndex);
-        // m_cl.context = cl::Context::create_cl_gl_shared(m_cl.device);
-        // m_cl.queue = cl::Queue::create(m_cl.context, m_cl.device);
-        // std::cout << cl::GetDeviceInfoStr(device) << "\n";
-#endif
+        /* OpenCL context, device and queue data. */
+        model.m_cl.context = clfw::Context();
+        model.m_cl.device = clfw::Device();
+        model.m_cl.queue = clfw::Queue();
 
+        /* Create OpenCL program. */
 #if 1
-        /* Create OpenCL program from source. */
         // std::string source;
         // source.append(cl::LoadProgramSource("data/empty.cl"));
         // m_cl.program = cl::CreateProgramWithSource(m_cl.context, source);
-        // cl::BuildProgram(m_cl.program, m_cl.device, "");
 #else
-        /* Create OpenCL program from file. */
         // m_cl.program = cl::CreateProgramFromFile(m_cl.context, "data/empty.cl");
-        // cl::BuildProgram(m_cl.program, m_cl.device, "");
 #endif
+        // cl::BuildProgram(m_cl.program, m_cl.device, "");
 
         /* Create OpenCL kernel. */
         // m_cl.kernels.resize(NumKernels, NULL);
-        // m_cl.kernels[KernelEmpty] = cl::Kernel::create(m_cl.program, "empty");
+        // m_cl.kernels[KernelEmpty] = cl::CreateKernel(m_cl.program, "empty");
     }
 
     return model;
 }
 
 /**
- * @brief Destroy a model and associated OpenCL/OpenGL objects.
+ * @brief Destroy the model and associated objects.
  */
 void Model::Destroy(Model &model)
 {
-    /* OpenGL objects. */
+    /* OpenGL data. */
     {}
 
-    /* OpenCL objects. */
+    /* OpenCL data. */
     {
-    //     for (auto &it : m_cl.images) {
-    //         cl::Memory::release(it);
-    //     }
-    //     for (auto &it : m_cl.buffers) {
-    //         cl::Memory::release(it);
-    //     }
-    //     for (auto &it : m_cl.kernels) {
-    //         cl::Kernel::release(it);
-    //     }
-    //     cl::Program::release(m_cl.program);
+        for (auto &it : model.m_cl.images) {
+            cl::ReleaseMemObject(it);
+        }
+        for (auto &it : model.m_cl.buffers) {
+            cl::ReleaseMemObject(it);
+        }
+        for (auto &it : model.m_cl.kernels) {
+            cl::ReleaseKernel(it);
+        }
+        cl::ReleaseProgram(model.m_cl.program);
     }
 }
 
 /**
  * @brief Handle the event in the model.
  */
-void Model::Handle(gl::Renderer::Event &event)
+void Model::Handle(glfw::Event &event)
 {}
 
 /**
@@ -105,7 +94,7 @@ void Model::Update()
  */
 void Model::Render(void)
 {
-    GLFWwindow *window = gl::Renderer::Window();
+    GLFWwindow *window = glfw::Window();
     if (window == nullptr) {
         return;
     }

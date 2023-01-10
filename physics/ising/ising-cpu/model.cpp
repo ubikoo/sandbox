@@ -14,7 +14,6 @@
 using namespace atto;
 
 /** ---------------------------------------------------------------------------
- * Model::Model
  * @brief Create OpenCL context and associated objects.
  */
 Model::Model()
@@ -99,14 +98,12 @@ Model::Model()
 }
 
 /**
- * Model::~Model
  * @brief Destroy the OpenCL context and associated objects.
  */
 Model::~Model()
 {}
 
 /** ---------------------------------------------------------------------------
- * Model::handle
  * @brief Handle an event.
  */
 void Model::handle(const gl::Event &event)
@@ -157,7 +154,6 @@ void Model::handle(const gl::Event &event)
 }
 
 /** ---------------------------------------------------------------------------
- * Model::draw
  * @brief Render the drawable.
  */
 void Model::draw(void *data)
@@ -226,7 +222,6 @@ void Model::draw(void *data)
 }
 
 /** ---------------------------------------------------------------------------
- * Model::execute
  * @brief Execute the model.
  */
 bool Model::execute(void)
@@ -296,7 +291,6 @@ bool Model::execute(void)
 }
 
 /**
- * Model::flip
  * @brief Flip a lattice site.
  */
 void Model::flip(void)

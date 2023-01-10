@@ -11,19 +11,16 @@
 
 #include "ito/opengl.hpp"
 #include "ito/opencl.hpp"
-using namespace ito;
-#include "model.hpp"
 #include "params.hpp"
+#include "model.hpp"
+
+using namespace ito;
 
 /** ---------------------------------------------------------------------------
  * @brief Constants and globals.
  */
-static const int kWidth = 800;
-static const int kHeight = 800;
-static const char kTitle[] = "Test map";
-static const double kTimeout = 0.001;
-
 Model gModel;
+size_t gStep = 0;
 
 /** ---------------------------------------------------------------------------
  * @brief Handle events.
@@ -31,7 +28,7 @@ Model gModel;
 static void Handle(void)
 {
     /* Poll events and handle. */
-    glfw::PollEvent(kTimeout);
+    glfw::PollEvent(Params::kTimeout);
     while (glfw::HasEvent()) {
         glfw::Event event = glfw::PopEvent();
 
@@ -56,6 +53,10 @@ static void Handle(void)
  */
 static void Update(void)
 {
+    std::cout << "Step " << gStep << "\n";
+    if (gStep++ == Params::kNumSteps) {
+        glfw::Close();
+    }
     gModel.Update();
 }
 
@@ -75,7 +76,7 @@ static void Render(void)
 int main(int argc, char const *argv[])
 {
     /* Initalize GLFW library and OpenGL context. */
-    glfw::Init(kWidth, kHeight, kTitle);
+    glfw::Init(Params::kWidth, Params::kHeight, Params::kTitle);
     glfw::EnableEvent(
         glfw::Event::FramebufferSize |
         glfw::Event::WindowClose     |

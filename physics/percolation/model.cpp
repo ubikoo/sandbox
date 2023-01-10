@@ -13,7 +13,6 @@
 using namespace atto;
 
 /** ---------------------------------------------------------------------------
- * Model::Model
  * @brief Create OpenCL context and associated objects.
  */
 Model::Model()
@@ -30,14 +29,12 @@ Model::Model()
 }
 
 /**
- * Model::~Model
  * @brief Destroy the OpenCL context and associated objects.
  */
 Model::~Model()
 {}
 
 /** ---------------------------------------------------------------------------
- * Model::execute
  * @brief Solve the percolation problem over a random lattice.
  */
 void Model::execute()
@@ -59,7 +56,6 @@ void Model::execute()
 }
 
 /**
- * Model::compute
  * @brief Compute the percolation clusters
  */
 void Model::compute()
@@ -89,7 +85,6 @@ void Model::compute()
 }
 
 /**
- * Model::reset
  * @brief Reset model counters.
  */
 void Model::reset()
@@ -98,7 +93,6 @@ void Model::reset()
 }
 
 /**
- * Model::sample
  * @brief Sample model counters.
  */
 void Model::sample()
